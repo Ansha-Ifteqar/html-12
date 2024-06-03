@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <div id =contaner ></div> 
+
+<script>
+    document.getElementById("addBtn").addEventListener("click", ()=>{
+        const response = fetch("http://localhost:3000/api/todo",{
+            method:"POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringfy({
+                todo: document.getElementById("userInput").value
+            })
+        }).then(res=>{
+            res.text().then(data=>{
+                alert("Todo added successfully")
+                window.location.reload()
+            })
+        }).catch(err=>{
+            alert('wrong credential')
+        })
+    })
+
+
+
+
+
+
+const response = fetch('http://localhost:3000/api/todo' , {
+    method: "GET",
+    "Content-Type": "application/json",
+
+}).then(res=>{
+    res.json().then(data=>{
+       // console.log(data)
+       for( let i=0; i<data.length; i++){
+        const newDiv = document.createElement('div')
+        const newP1 = document.createElement('p')
+        //const newP2 = document.createElement('p')
+        const newP2 = document.createElement('INPUT')
+        newP2.setAttribute("type", "checkbox");
+
+newP1.innerText=data[i].todo
+newP1.innerText=data[i].isdone
+
+newDiv.appendChild(newP2)
+newDiv.appendChild(newP1)
+newDiv.style.display='flex'
+
+document.body.appendChild(newDiv)
+
+
+       }
+    })
+})
+
+</script>
+</body>
+</html>
